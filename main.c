@@ -1,80 +1,131 @@
-#include "mlx/mlx.h"
-#include <math.h>
 
-typedef struct	s_data {
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}				t_data;
+#include "so_long.h"
+#include <fcntl.h>    // For open
+#include <unistd.h>   // For close, read
+#include <stdio.h>    // For perror, printf
+#include <stdlib.h>   // For malloc, free
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
-{
-	char	*dst;
 
-	if (x >= 0 && y >= 0 && x < 1920 && y < 1080) // Ensure within bounds
-	{
-		dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-		*(unsigned int*)dst = color;
-	}
-}
-void draw_x(t_data *data, int x, int y, int color, int size)
+int check_walls(char *str)
 {
     int i;
-
     i = 0;
-    while (i < size)
+    while(str[i])
     {
-        my_mlx_pixel_put(data, x + i, y, color);
-		i++;
+        if (str[i] == '\n')
+        {
+            break;
+        }
+        if (str[i] != '1')
+        {
+            return 0;
+        }
+        i++;
+    }
+    return 1;
+}
+
+int check_first_walls(char *str)
+{
+    int len;
+    len = ft_strlen(str);
+    if (str[0] != '1'  || str[len - 2] != '1')
+    {
+        return 0;
+    }
+    return 1;
+}
+
+void check_map_element(t_map map , char **str)
+{
+    int i;
+    int j;
+    i = 0;
+    j = 0;
+    while (str[j])
+    {
+        while (str[j][i])
+        {
+            if (str[j][i] == 'C')
+                map.collection += 1;
+            if (str[j][i] == 'E')
+                map.door += 1;
+            if (str[j][i] == 'P')
+                map.player += 1;
+           i++;
+        }
+        
+        j++;
     }
     
 }
-void draw_y(t_data *data, int x, int y, int color, int size)
+int check_map(t_map map)
 {
-    int i;
-
-    i = 0;
-    while (i < size)
+    if (map.collection != 1 || map.door != 1 || map.player != 1)
     {
-        my_mlx_pixel_put(data, x , y + i, color);
-		i++;
+        return 0;
     }
+    return 1;
+}
+
+
+int main(int ac, char **av)
+{
+    int fd;
+    char **ptr = NULL;
+    char *line = NULL;
+    int i = 0;
+    int j = 0;
+    t_map map;
+    if (ac < 2) {
+        perror("No file provided");
+        return 1;
+    }
+
+    fd = open(av[1], O_RDONLY);
+    if (fd == -1) {
+        perror("Error opening file");
+        return 1;
+    }
+
+    ptr = malloc(sizeof(char *) * 1024); 
+    if (!ptr) {
+        perror("Memory allocation failed");
+        close(fd);
+        return 1;
+    }
+
+    while ((line = get_next_line(fd)) != NULL) 
+    {
+        ptr[i++] = line; 
+    }
+    ptr[i] = NULL;
+
+    close(fd);
     
+    //check walls
+    if (!check_walls(ptr[0]) || !check_walls(ptr[i - 1]))
+    {
+        perror("Error\n");
+        exit(1);
+    }
+    while (j <= i - 1)
+    {
+        if (!check_first_walls(ptr[j]))
+        {
+            perror("Error\n");
+            exit(1);  
+        }
+        j++;
+    }
+    map = (t_map){0, 0, 0};
+    if (!check_map(map))
+    {
+        perror("Error\n");
+        exit(1);  
+    }
+
+    return 0;
 }
 
-void	draw_squir(t_data *data, int x, int y, int color, int size)
-{
-	while (size-- >= 0)
-	{
-		
-		draw_x(data, x, y, color, size);
-		draw_y(data, x, y, color, size);
-		draw_y(data, x + size, y , color, size);
-		draw_x(data, x , y + size, color, size);
-		x--;
-		y--;
-	}
-	
-}
-
-int	main(void)
-{
-	void	*mlx;
-	void	*mlx_win;
-	t_data	img;
-
-	mlx = mlx_init();
-	mlx_win = mlx_new_window(mlx, 2920, 2080, "Draw Circle");
-	img.img = mlx_new_image(mlx, 2920, 2080);
-	img.addr = mlx_get_data_addr(img.img, &img.bits_per_pixel, &img.line_length, &img.endian);
-
-	// Draw a circle at (960, 540) with radius 100 and red color
-
-    draw_squir(&img , 960, 540, 0x00FF0000, 250);
-
-	mlx_put_image_to_window(mlx, mlx_win, img.img, 0, 0);
-	mlx_loop(mlx);
-}
 
