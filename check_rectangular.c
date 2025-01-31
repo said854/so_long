@@ -1,0 +1,48 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_rectangular.c                                :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/01/27 10:16:31 by sjoukni           #+#    #+#             */
+/*   Updated: 2025/01/27 10:40:38 by sjoukni          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "so_long.h"
+
+static int	ft_slen(const char *str)
+{
+	int	len;
+
+	len = 0;
+	if (!str)
+		return (0);
+	while (str[len] && str[len] != '\n')
+		len++;
+	return (len);
+}
+
+int check_rectangular(char **str) 
+{
+    if (!str || !str[0]) 
+        return 0;
+
+    int len = ft_slen(str[0]);
+    int i = 1;
+
+    while (str[i]) 
+    {
+        if (str[i][0] == '\n')
+        {
+            break;
+        }
+        if (ft_slen(str[i]) != len)
+        {
+            return 0;
+        }
+        i++;
+    }
+    return 1; 
+}

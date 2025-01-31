@@ -1,131 +1,121 @@
-
 #include "so_long.h"
-#include <fcntl.h>    // For open
-#include <unistd.h>   // For close, read
-#include <stdio.h>    // For perror, printf
-#include <stdlib.h>   // For malloc, free
+#include "mlx.h"
+#include <stdio.h>
+#include <stdlib.h>
 
-
-int check_walls(char *str)
+int close_window(void *param)
 {
-    int i;
-    i = 0;
-    while(str[i])
+    t_mlx *mlx = (t_mlx *)param;
+    free_map(mlx->ptr_map, mlx->lines);
+    mlx_destroy_window(mlx->mlx, mlx->mlx_win);
+    mlx_destroy_display(mlx->mlx);
+    free(mlx->mlx);
+    exit(0);
+}
+
+int key_hook(int keycode, t_mlx *param)
+{
+    printf("key = %d\n", keycode);
+    printf("x = %d, y = %d\n", param->map->x_player, param->map->y_player);
+
+    if (keycode == 65307) // Escape key
+        close_window(param);
+    else if (keycode == 65363 && param->ptr_map[param->map->y_player][param->map->x_player + 1] != '1')
+        param->map->x_player += 1;
+    else if (keycode == 65361 && param->ptr_map[param->map->y_player][param->map->x_player - 1] != '1')
+        param->map->x_player -= 1;
+    else if (keycode == 65364 && param->ptr_map[param->map->y_player + 1][param->map->x_player] != '1')
+        param->map->y_player += 1;
+    else if (keycode == 65362 && param->ptr_map[param->map->y_player - 1][param->map->x_player] != '1')
+        param->map->y_player -= 1;
+    return (0);
+}
+
+void render_map(t_mlx *mlx, t_img *img)
+{
+    int x = 0;
+    int y = 0;
+
+
+    while (y < mlx->lines)
     {
-        if (str[i] == '\n')
+        x = 0;
+        while (mlx->ptr_map[y][x])
         {
-            break;
+            if (mlx->ptr_map[y][x] == '1') 
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->img_win, x * 80, y * 80);
+            }
+            if (mlx->ptr_map[y][x] == '0' || mlx->ptr_map[y][x] == 'P') 
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->img_win2, x * 80, y * 80);
+            }
+            if (mlx->ptr_map[y][x] == 'C') 
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->img_win4, x * 80, y * 80);
+            }
+            if (mlx->ptr_map[y][x] == 'E') 
+            {
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->img_win5, x * 80, y * 80);
+            }
+            mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->img_win3,  mlx->map->x_player * 80, mlx->map->y_player * 80);
+            x++;
         }
-        if (str[i] != '1')
-        {
-            return 0;
-        }
-        i++;
+        y++;
     }
-    return 1;
 }
 
-int check_first_walls(char *str)
-{
-    int len;
-    len = ft_strlen(str);
-    if (str[0] != '1'  || str[len - 2] != '1')
-    {
-        return 0;
-    }
-    return 1;
-}
 
-void check_map_element(t_map map , char **str)
+int ft(t_mlx *param)
 {
-    int i;
-    int j;
-    i = 0;
-    j = 0;
-    while (str[j])
-    {
-        while (str[j][i])
-        {
-            if (str[j][i] == 'C')
-                map.collection += 1;
-            if (str[j][i] == 'E')
-                map.door += 1;
-            if (str[j][i] == 'P')
-                map.player += 1;
-           i++;
-        }
-        
-        j++;
-    }
-    
+    render_map(param, &param->img); 
+    return (0);
 }
-int check_map(t_map map)
-{
-    if (map.collection != 1 || map.door != 1 || map.player != 1)
-    {
-        return 0;
-    }
-    return 1;
-}
-
 
 int main(int ac, char **av)
 {
-    int fd;
-    char **ptr = NULL;
-    char *line = NULL;
-    int i = 0;
-    int j = 0;
-    t_map map;
-    if (ac < 2) {
-        perror("No file provided");
-        return 1;
-    }
+    t_map map_data;
+    t_mlx mlx;
 
-    fd = open(av[1], O_RDONLY);
-    if (fd == -1) {
-        perror("Error opening file");
-        return 1;
-    }
-
-    ptr = malloc(sizeof(char *) * 1024); 
-    if (!ptr) {
-        perror("Memory allocation failed");
-        close(fd);
-        return 1;
-    }
-
-    while ((line = get_next_line(fd)) != NULL) 
+    if (ac < 2)
     {
-        ptr[i++] = line; 
+        perror("Error: No file provided");
+        return (1);
     }
-    ptr[i] = NULL;
 
-    close(fd);
-    
-    //check walls
-    if (!check_walls(ptr[0]) || !check_walls(ptr[i - 1]))
+    mlx.map = &map_data;
+    mlx.ptr_map = parse_map(av[1], &mlx.lines);
+    validate_map(mlx.ptr_map, mlx.lines, &map_data);
+
+    mlx.mlx = mlx_init();
+    if (!mlx.mlx)
     {
-        perror("Error\n");
+        perror("MLX initialization failed");
         exit(1);
     }
-    while (j <= i - 1)
+
+    mlx.mlx_win = mlx_new_window(mlx.mlx, map_data.columes * 80, map_data.rowes * 80, "so_long");
+    if (!mlx.mlx_win)
     {
-        if (!check_first_walls(ptr[j]))
-        {
-            perror("Error\n");
-            exit(1);  
-        }
-        j++;
-    }
-    map = (t_map){0, 0, 0};
-    if (!check_map(map))
-    {
-        perror("Error\n");
-        exit(1);  
+        perror("Failed to create the window");
+        exit(1);
     }
 
-    return 0;
+    mlx.img.img_win = mlx_xpm_file_to_image(mlx.mlx, "wall.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    mlx.img.img_win2 = mlx_xpm_file_to_image(mlx.mlx, "template1.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    mlx.img.img_win3 = mlx_xpm_file_to_image(mlx.mlx, "player1.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    mlx.img.img_win4 = mlx_xpm_file_to_image(mlx.mlx, "collection.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    mlx.img.img_win5 = mlx_xpm_file_to_image(mlx.mlx, "door.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    if (!mlx.img.img_win || !mlx.img.img_win2 || !mlx.img.img_win3)
+    {
+        perror("Error: Failed to load textures");
+        exit(1);
+    }
+
+    mlx_loop_hook(mlx.mlx, ft, &mlx);
+    mlx_key_hook(mlx.mlx_win, key_hook, &mlx);
+    mlx_hook(mlx.mlx_win, 17, 0, close_window, &mlx);
+    mlx_loop(mlx.mlx);
+
+    return (0);
 }
-
-
