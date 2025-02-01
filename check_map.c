@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:21:31 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/01/30 11:32:33 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/01 18:02:26 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int check_map_element(t_map *map, char **str)
         while (str[j][i]) 
         {
             if (str[j][i] == 'C')
-                map->collection++;
+                map->total_collectibles++;
             else if (str[j][i] == 'E')
                 map->door++;
             else if (str[j][i] == 'P')
@@ -49,9 +49,11 @@ int count_coulume(char **str)
     return (j);
 }
 
+
 int check_map(t_map *map, char **str) 
 {
-    map->collection = 0;
+    map->total_collectibles = 0;
+    map->collected_items = 0;
     map->door = 0;
     map->player = 0;
     map->x_player = 0;
@@ -60,7 +62,7 @@ int check_map(t_map *map, char **str)
     map->rowes = count_coulume(str);
     if (check_map_element(map, str)) 
     {
-        if (map->collection < 1) 
+        if (map->total_collectibles < 1) 
         {
             printf("Error: No collectibles (C) in the map\n");
             return 0;
@@ -73,6 +75,11 @@ int check_map(t_map *map, char **str)
         if (map->player != 1) 
         {
             printf("Error: There must be exactly 1 starting position (P) in the map\n");
+            return 0;
+        }
+        if (valid_path(str, map, map->columes) != 1) 
+        {
+            printf("Error: no valid path\n");
             return 0;
         }
         return 1;

@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:19:26 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/01/27 10:20:32 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/01 16:38:41 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int valid_path(char **str, t_map *map, int lines)
 
     flood_fill(map_copy, map->x_player, map->y_player, lines, ft_strlen(map_copy[0]), &collectibles, &exit_found);
 
-    if (collectibles == map->collection && exit_found)
+    if (collectibles == map->total_collectibles && exit_found)
     {
         printf("All collectibles and exit are reachable\n");
         free_map(map_copy, lines);

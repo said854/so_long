@@ -6,31 +6,33 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:09:53 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/01/31 21:47:50 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/01 17:37:50 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
+
 typedef struct s_map
 {
-	int player ;
-    int door;
-    int collection;
     int x_player;
     int y_player;
     int columes;
+    int player;
     int rowes;
-}		t_map;
+    int door;
+    int total_collectibles;
+    int collected_items;
+}               t_map;
 
 typedef struct s_img
 {
-    void *img_win;
-    void *img_win2;
-    void *img_win3;
-    void *img_win4;
-    void *img_win5;
+    void *wall;
+    void *template;
+    void *player;
+    void *collection;
+    void *door;
     int img_width;
     int img_height;
 }              t_img;
@@ -42,6 +44,7 @@ typedef struct s_mlx
     char **ptr_map;
     int lines;
     t_img img;
+    int moves;
     t_map *map;
 }              t_mlx;
 
