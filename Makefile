@@ -3,7 +3,7 @@ CC = cc
 LIBFT = libft.a
 CFLAGS = -Wall -Wextra -Werror
 MLX = libmlx.a -lX11 -lXext -lm
-SRC_FILES = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c free_map.c check_rectangular.c valid_path.c check_map.c count_lines.c check_walls.c parse_map.c
+SRC_FILES = main.c get_next_line/get_next_line.c get_next_line/get_next_line_utils.c free_map.c check_rectangular.c valid_path.c check_map.c count_lines.c check_walls.c parse_map.c free_resources.c setup_game.c sutup_resources.c
 
 OBJ_FILES = $(SRC_FILES:.c=.o)
 

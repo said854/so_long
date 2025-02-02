@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:09:53 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/01 17:37:50 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/02 22:31:50 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,19 @@ char **parse_map(const char *filename, int *num_lines);
 void validate_map(char **map, int num_lines, t_map *map_data);
 int check_walls(char *str); 
 int check_first_walls(char *str);
+void free_images(t_mlx *mlx);
+void free_all(t_mlx *mlx);
+int close_window(void *param);
+void handle_move(t_mlx *mlx, int new_x, int new_y);
+int key_hook(int keycode, t_mlx *mlx);
+void render_map(t_mlx *mlx);
+void initialize(t_mlx *mlx, t_map *map_data, char *filename);
+void validate_collection(char **ptr_map, int lines, t_map *map);
+void find_player_position(t_map *map, char **ptr_map, int lines);
+void put_image(t_mlx *mlx, int x, int y, char c);
+void put_image(t_mlx *mlx, int x, int y, char c);
+int setup_window(t_mlx *mlx, t_map *map_data);
+int load_imgs(t_mlx *mlx);
 
 
 

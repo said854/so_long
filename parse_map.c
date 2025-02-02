@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:31:51 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/01/30 09:32:32 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/01 19:01:52 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ void validate_map(char **map, int num_lines, t_map *map_data)
 
     i = 0;
     if (!check_rectangular(map))
+    {
+        free_map(map, num_lines);
+        handle_error("Error: The map is not rectangular");
+    }
+     if (!check_rectangular(map))
     {
         free_map(map, num_lines);
         handle_error("Error: The map is not rectangular");
@@ -48,6 +53,23 @@ void validate_map(char **map, int num_lines, t_map *map_data)
         handle_error("Error: Invalid map content");
     }
 }
+int check_filename(const char *filename)
+{
+    int len = ft_strlen(filename);
+    
+    if (len < 4)
+        return 0;
+     if (filename[0] == '.' && filename[1] == 'b' && filename[2] == 'e' && filename[3] == 'r')
+    {
+        return 0;
+    }
+    if (filename[len - 4] == '.' && filename[len - 3] == 'b' && filename[len - 2] == 'e' && filename[len - 1] == 'r')
+    {
+        return 1;
+    }
+
+    return 0;
+}
 
 
 char **parse_map(const char *filename, int *num_lines)
@@ -56,7 +78,12 @@ char **parse_map(const char *filename, int *num_lines)
     char **map;
     char *line;
     int i = 0;
-
+    
+    if (!check_filename(filename))
+    {
+        handle_error("Error: Invalid map name");
+        exit(1);
+    }
     fd = open(filename, O_RDONLY);
     if (fd == -1)
         handle_error("Error: Failed to open file");
