@@ -33,7 +33,7 @@ void handle_move(t_mlx *mlx, int new_x, int new_y)
         mlx->ptr_map[new_y][new_x] = 'P';
     }
     printf("number of moves = %d\n", mlx->moves++);
-    render_map(mlx);
+    render_map(mlx, &mlx->img);
 }
 
 int key_hook(int keycode, t_mlx *mlx)
@@ -55,15 +55,28 @@ int key_hook(int keycode, t_mlx *mlx)
 }
 
 
-void render_map(t_mlx *mlx)
+void render_map(t_mlx *mlx, t_img *img)
 {
     int x, y;
-    y = -1;
-    while (++y < mlx->lines)
+    y = 0;
+    while (y < mlx->lines)
     {
-        x = -1;
-        while (mlx->ptr_map[y][++x])
-            put_image(mlx, x, y, mlx->ptr_map[y][x]);
+        x = 0;
+        while (mlx->ptr_map[y][x])
+        {
+            if (mlx->ptr_map[y][x] == '0')
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->template, x * 80, y * 80);
+            else if (mlx->ptr_map[y][x] == '1') 
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->wall, x * 80, y * 80);
+            else if (mlx->ptr_map[y][x] == 'C') 
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->collection, x * 80, y * 80);
+            else if (mlx->ptr_map[y][x] == 'E') 
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->door, x * 80, y * 80);
+            else if (mlx->ptr_map[y][x] == 'P')
+                mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->player_frames[img->current_frame], mlx->map->x_player * 80, mlx->map->y_player * 80);
+            x++;
+        }
+        y++;
     }
 }
 

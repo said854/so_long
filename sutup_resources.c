@@ -44,19 +44,19 @@ void find_player_position(t_map *map, char **ptr_map, int lines)
     }
 }
 
-void put_image(t_mlx *mlx, int x, int y, char c)
-{
-    if (c == '0')
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.template, x * 80, y * 80);
-    else if (c == '1')
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.wall, x * 80, y * 80);
-    else if (c == 'C')
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.collection, x * 80, y * 80);
-    else if (c == 'E')
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.door, x * 80, y * 80);
-    else if (c == 'P')
-        mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.player, mlx->map->x_player * 80, mlx->map->y_player * 80);
-}
+// void put_image(t_mlx *mlx, int x, int y, char c)
+// {
+//     if (c == '0')
+//         mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.template, x * 80, y * 80);
+//     else if (c == '1')
+//         mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.wall, x * 80, y * 80);
+//     else if (c == 'C')
+//         mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.collection, x * 80, y * 80);
+//     else if (c == 'E')
+//         mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.door, x * 80, y * 80);
+//     else if (c == 'P')
+//         mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, mlx->img.player, mlx->map->x_player * 80, mlx->map->y_player * 80);
+// }
 
 
 int setup_window(t_mlx *mlx, t_map *map_data)

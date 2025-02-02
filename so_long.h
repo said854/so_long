@@ -33,6 +33,8 @@ typedef struct s_img
     void *player;
     void *collection;
     void *door;
+    void *player_frames[10];
+    int current_frame;
     int img_width;
     int img_height;
 }              t_img;
@@ -58,7 +60,7 @@ typedef struct s_mlx
 # include <stdio.h>
 # include <limits.h>
 # include <stddef.h>
-# include <mlx.h>
+# include "mlx/mlx.h"
 # include "libft/libft.h"
 
 # ifndef BUFFER_SIZE
@@ -83,12 +85,11 @@ void free_all(t_mlx *mlx);
 int close_window(void *param);
 void handle_move(t_mlx *mlx, int new_x, int new_y);
 int key_hook(int keycode, t_mlx *mlx);
-void render_map(t_mlx *mlx);
+void render_map(t_mlx *mlx, t_img *img);
 void initialize(t_mlx *mlx, t_map *map_data, char *filename);
 void validate_collection(char **ptr_map, int lines, t_map *map);
 void find_player_position(t_map *map, char **ptr_map, int lines);
-void put_image(t_mlx *mlx, int x, int y, char c);
-void put_image(t_mlx *mlx, int x, int y, char c);
+// void put_image(t_mlx *mlx, int x, int y, char c);
 int setup_window(t_mlx *mlx, t_map *map_data);
 int load_imgs(t_mlx *mlx);
 
