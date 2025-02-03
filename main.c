@@ -19,16 +19,16 @@
 
 void load_player_animation(t_mlx *mlx)
 {
-    mlx->img.player_frames[0] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[1] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player2.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[2] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player3.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[3] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player4.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[4] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[5] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[6] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[7] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[8] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.player_frames[9] = mlx_xpm_file_to_image(mlx->mlx, "player_right/player1.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[0] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (10)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[1] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (11)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[2] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (12)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[3] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (13)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[4] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (14)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[5] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (15)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[6] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (16)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[7] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (17)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[8] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (18)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
+    mlx->img.player_frames[9] = mlx_xpm_file_to_image(mlx->mlx, "test/New Project (19)-resized.xpm", &mlx->img.img_width, &mlx->img.img_height);
     mlx->img.current_frame = 0;
 }
 
@@ -36,12 +36,18 @@ int update_animation(t_mlx *mlx)
 {
     static int frame_count = 0;
     
-    if (frame_count++ >= 10)
+    if (frame_count % 150 == 0)
     {
-        mlx->img.current_frame = (mlx->img.current_frame + 1) % 4;
-        frame_count = 0;
-        render_map(mlx, &mlx->img);
+       mlx->img.current_frame++;
+       if (mlx->img.current_frame > 9)
+       {
+            frame_count = 0;
+            mlx->img.current_frame = 0;
+       }
     }
+    // printf("fram = %d\n", mlx->img.current_frame);
+    frame_count++;
+    render_map(mlx, &mlx->img);
     return (0);
 }
 
