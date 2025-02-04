@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 22:23:51 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/02 22:24:18 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:21:20 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void free_images(t_mlx *mlx)
         mlx_destroy_image(mlx->mlx, mlx->img.collection);
     if (mlx->img.door)
         mlx_destroy_image(mlx->mlx, mlx->img.door);
+    if (mlx->img.enemy)
+        mlx_destroy_image(mlx->mlx, mlx->img.enemy);
 }
 
 // void free_all(t_mlx *mlx)

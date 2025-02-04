@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:21:31 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/01 18:02:26 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:17:08 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ static int check_map_element(t_map *map, char **str)
         i = 0;
         while (str[j][i]) 
         {
+            // if (str[j][i] == 'N')
+            //     map->enemy++;
             if (str[j][i] == 'C')
                 map->total_collectibles++;
             else if (str[j][i] == 'E')
@@ -30,7 +32,7 @@ static int check_map_element(t_map *map, char **str)
                 map->x_player = j;
                 map->y_player = i;
             }
-            else if (str[j][i] != '0' && str[j][i] != '1' && str[j][i] != '\n')
+            else if (str[j][i] != '0' && str[j][i] != '1' && str[j][i] != '\n' && str[j][i] != 'N')
                 return 0;
             i++;
         }
@@ -58,6 +60,7 @@ int check_map(t_map *map, char **str)
     map->player = 0;
     map->x_player = 0;
     map->y_player = 0;
+    // map->enemy = 0;
     map->columes = ft_strlen(str[0]) - 1;
     map->rowes = count_coulume(str);
     if (check_map_element(map, str)) 

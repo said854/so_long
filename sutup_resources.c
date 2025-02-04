@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 22:30:34 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/02 22:45:29 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:20:58 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,10 @@ int load_imgs(t_mlx *mlx)
         &mlx->img.img_width, &mlx->img.img_height);
     mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "resources/door.xpm",
         &mlx->img.img_width, &mlx->img.img_height);
-    
+    mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "resources/enemy.xpm",
+        &mlx->img.img_width, &mlx->img.img_height);
     if (!mlx->img.wall || !mlx->img.template || !mlx->img.player 
-        || !mlx->img.collection || !mlx->img.door)
+        || !mlx->img.collection || !mlx->img.door || !mlx->img.enemy)
         return (perror("Error: Failed to load textures"), free_images(mlx), 1);
     
     return (0);

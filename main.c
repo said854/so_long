@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 22:24:27 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/02 22:32:06 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/04 20:52:02 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int update_animation(t_mlx *mlx)
 {
     static int frame_count = 0;
     
-    if (frame_count % 150 == 0)
+    if (frame_count % 20 == 0)
     {
        mlx->img.current_frame++;
        if (mlx->img.current_frame > 9)
@@ -47,7 +47,7 @@ int update_animation(t_mlx *mlx)
     }
     // printf("fram = %d\n", mlx->img.current_frame);
     frame_count++;
-    render_map(mlx, &mlx->img);
+    // render_map(mlx, &mlx->img);
     return (0);
 }
 
@@ -56,7 +56,7 @@ int main(int ac, char **av)
 {
     t_map map_data;
     t_mlx mlx;
-    if (ac < 2)
+    if (ac != 2)
         return (perror("Error: No file provided"), 1);
     mlx.moves = 0;
     mlx.map = &map_data;
@@ -75,6 +75,7 @@ int main(int ac, char **av)
     mlx.img.template = mlx_xpm_file_to_image(mlx.mlx, "resources/template.xpm", &mlx.img.img_width, &mlx.img.img_height);
     mlx.img.collection = mlx_xpm_file_to_image(mlx.mlx, "resources/collection.xpm", &mlx.img.img_width, &mlx.img.img_height);
     mlx.img.door = mlx_xpm_file_to_image(mlx.mlx, "resources/door.xpm", &mlx.img.img_width, &mlx.img.img_height);
+    mlx.img.enemy = mlx_xpm_file_to_image(mlx.mlx, "resources/enemy.xpm", &mlx.img.img_width, &mlx.img.img_height);
     if (!mlx.img.wall || !mlx.img.template || !mlx.img.collection || !mlx.img.door)
         return (perror("Error: Failed to load textures"), free_images(&mlx), 1);
     mlx_key_hook(mlx.mlx_win, key_hook, &mlx);
@@ -85,20 +86,3 @@ int main(int ac, char **av)
 }
 
 
-// int main(int ac, char **av)
-// {
-//     t_map map_data;
-//     t_mlx mlx;
-
-//     if (ac < 2)
-//         return (perror("Error: No file provided"), 1);
-//     initialize(&mlx, &map_data, av[1]);
-//     if (setup_window(&mlx, &map_data))
-//         return (1);
-//     if (load_imgs(&mlx))
-//         return (1);
-//     mlx_key_hook(mlx.mlx_win, key_hook, &mlx);
-//     mlx_hook(mlx.mlx_win, 17, 0, close_window, &mlx);
-//     mlx_loop(mlx.mlx);
-//     return (0);
-// }

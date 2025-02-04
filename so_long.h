@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:09:53 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/02 22:31:50 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/03 19:11:19 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ typedef struct s_map
     int player;
     int rowes;
     int door;
+    int enemy;
     int total_collectibles;
     int collected_items;
 }               t_map;
@@ -33,6 +34,7 @@ typedef struct s_img
     void *player;
     void *collection;
     void *door;
+    void *enemy;
     void *player_frames[10];
     int current_frame;
     int img_width;
