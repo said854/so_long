@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:09:53 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/03 19:11:19 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/10 18:45:18 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ void render_map(t_mlx *mlx, t_img *img);
 void initialize(t_mlx *mlx, t_map *map_data, char *filename);
 void validate_collection(char **ptr_map, int lines, t_map *map);
 void find_player_position(t_map *map, char **ptr_map, int lines);
-// void put_image(t_mlx *mlx, int x, int y, char c);
 int setup_window(t_mlx *mlx, t_map *map_data);
-int load_imgs(t_mlx *mlx);
+void load_images(t_mlx *mlx);
+void handle_error(const char *message);
+void load_player_animation(t_mlx *mlx);
+int update_animation(t_mlx *mlx);
 
 
 

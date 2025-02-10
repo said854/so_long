@@ -1,23 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_resources.c                                   :+:      :+:    :+:   */
+/*   free_maps.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 22:23:51 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/03 19:21:20 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/10 10:07:33 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+void free_map(char **map, int lines) 
+{
+    int i = 0;
+    while (i < lines && map[i]) 
+    {
+        free(map[i]);
+        i++;
+    }
+    free(map);
+}
+
 void free_images(t_mlx *mlx)
 {
-    for (int i = 0; i < 4; i++)
+    int i;
+    
+    i = 0;
+    while(i < 10)
     {
         if (mlx->img.player_frames[i])
             mlx_destroy_image(mlx->mlx, mlx->img.player_frames[i]);
+        i++;
     }
     if (mlx->img.wall)
         mlx_destroy_image(mlx->mlx, mlx->img.wall);
@@ -31,37 +46,21 @@ void free_images(t_mlx *mlx)
         mlx_destroy_image(mlx->mlx, mlx->img.enemy);
 }
 
-// void free_all(t_mlx *mlx)
-// {
-//     free_images(mlx);
-//     free_map(mlx->ptr_map, mlx->lines);
-//     mlx_clear_window(mlx->mlx, mlx->mlx_win);
-//     if (mlx->mlx_win)
-//         mlx_destroy_window(mlx->mlx, mlx->mlx_win);
-//     if (mlx->mlx)
-//     {
-//         mlx_destroy_display(mlx->mlx);
-//         free(mlx->mlx);
-//     }
-// }
-
-// int close_window(void *param)
-// {
-//     free_all((t_mlx *)param);
-//     exit(0);
-// }
 int close_window(void *param)
 {
     t_mlx *mlx = (t_mlx *)param;
     free_images(mlx);
     free_map(mlx->ptr_map, mlx->lines);
-    mlx_clear_window(mlx->mlx, mlx->mlx_win);
+    
     if (mlx->mlx_win)
         mlx_destroy_window(mlx->mlx, mlx->mlx_win);
+
     if (mlx->mlx)
     {
+        mlx_loop_end(mlx->mlx);
         mlx_destroy_display(mlx->mlx);
         free(mlx->mlx);
     }
+    
     exit(0);
 }
