@@ -6,15 +6,15 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:31:51 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 17:47:54 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:40:08 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long_bonus.h"
 
-void	handle_error(const char *message)
+void	handle_error(char *message)
 {
-	perror(message);
+	ft_putstr_fd(message, 2);
 	exit(1);
 }
 

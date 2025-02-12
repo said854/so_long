@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:35:41 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:38:23 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	validate_map_structure(char **map, int num_lines)
 	if (!check_rectangular(map))
 	{
 		free_map(map, num_lines);
-		handle_error("Error: The map is not rectangular");
+		handle_error("Error\nThe map is not rectangular");
 	}
 	if (!check_walls(map[0]) || !check_walls(map[num_lines - 1]))
 	{
 		free_map(map, num_lines);
-		handle_error("Error: The map is not surrounded by walls");
+		handle_error("Error\nThe map is not surrounded by walls");
 	}
 }
 
@@ -36,14 +36,14 @@ void	validate_map_content(char **map, int num_lines, t_map *map_data)
 		if (!check_first_walls(map[i]))
 		{
 			free_map(map, num_lines);
-			handle_error("Error: The map is not enclosed by walls at row");
+			handle_error("Error\nThe map is not enclosed by walls at row");
 		}
 		i++;
 	}
 	if (!check_map(map_data, map))
 	{
 		free_map(map, num_lines);
-		handle_error("Error: Invalid map content");
+		handle_error("Error\nInvalid map content");
 	}
 }
 
