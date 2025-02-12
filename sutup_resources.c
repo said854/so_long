@@ -6,23 +6,26 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/02 22:30:34 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/10 18:45:04 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:48:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-int count_lines(int fd) 
+int	count_lines(int fd)
 {
-    int line_count = 0;
-    char *line;
+	int		line_count;
+	char	*line;
 
-    while ((line = get_next_line(fd)) != NULL) 
-    {
+	line = get_next_line(fd);
+	line_count = 0;
+	while (line)
+	{
 		line_count++;
-        free(line); 
-    }
-    return line_count;
+		free(line);
+		line = get_next_line(fd);
+	}
+	return (line_count);
 }
 
 void	validate_collection(char **ptr_map, int lines, t_map *map)
@@ -52,12 +55,14 @@ void	find_player_position(t_map *map, char **ptr_map, int lines)
 	{
 		x = -1;
 		while (ptr_map[y][++x])
+		{
 			if (ptr_map[y][x] == 'P')
 			{
 				map->x_player = x;
 				map->y_player = y;
 				return ;
 			}
+		}
 	}
 }
 
@@ -73,17 +78,16 @@ int	setup_window(t_mlx *mlx, t_map *map_data)
 	return (0);
 }
 
-
-void load_images(t_mlx *mlx)
+void	load_images(t_mlx *mlx)
 {
-    mlx->img.wall = mlx_xpm_file_to_image(mlx->mlx, "maps/wall.xpm",
-            &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.template = mlx_xpm_file_to_image(mlx->mlx, "maps/template.xpm",
-            &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.collection = mlx_xpm_file_to_image(mlx->mlx, "maps/collection.xpm",
-            &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "maps/door.xpm",
-            &mlx->img.img_width, &mlx->img.img_height);
-    mlx->img.enemy = mlx_xpm_file_to_image(mlx->mlx, "maps/enemy.xpm",
-            &mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.wall = mlx_xpm_file_to_image(mlx->mlx, "textures/wall.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.template = mlx_xpm_file_to_image(mlx->mlx, "textures/template.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.collection = mlx_xpm_file_to_image(mlx->mlx, "textures/collection.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "textures/door.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.enemy = mlx_xpm_file_to_image(mlx->mlx, "textures/enemy.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
 }

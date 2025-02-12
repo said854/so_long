@@ -6,19 +6,24 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:30:01 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/10 18:31:44 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-void draw_rectangle(t_mlx *mlx, int x, int y, int width, int height)
+void	draw_rectangle(t_mlx *mlx, int width, int height)
 {
-	int i, j;
+	int	i;
+	int	j;
+	int	x;
+	int	y;
 
 	if (!mlx || !mlx->mlx_win)
-		return;
+		return ;
 	i = 0;
+	x = 10;
+	y = 10;
 	while (i < height)
 	{
 		j = 0;
@@ -31,31 +36,43 @@ void draw_rectangle(t_mlx *mlx, int x, int y, int width, int height)
 	}
 }
 
+void	*get_tile_image(t_img *img, char tile)
+{
+	if (tile == '0' && img->template)
+		return (img->template);
+	if (tile == '1' && img->wall)
+		return (img->wall);
+	if (tile == 'C' && img->collection)
+		return (img->collection);
+	if (tile == 'E' && img->door)
+		return (img->door);
+	if (tile == 'N' && img->enemy)
+		return (img->enemy);
+	if (tile == 'P' && img->player_frames[img->current_frame])
+		return (img->player_frames[img->current_frame]);
+	return (NULL);
+}
+
 void	put_image_to_window(t_mlx *mlx, t_img *img, int x, int y)
 {
-	char tile = mlx->ptr_map[y][x];
-	if (tile == '0' && img->template)
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->template, x * 80, y * 80);
-	else if (tile == '1' && img->wall)
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->wall, x * 80, y * 80);
-	else if (tile == 'C' && img->collection)
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->collection, x * 80, y * 80);
-	else if (tile == 'E' && img->door)
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->door, x * 80, y * 80);
-	else if (tile == 'N' && img->enemy)
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->enemy, x * 80, y * 80);
-	else if (tile == 'P' && img->player_frames[img->current_frame])
-		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, img->player_frames[img->current_frame],
-						mlx->map->x_player * 80, mlx->map->y_player * 80);
+	char	tile;
+	void	*image;
+
+	tile = mlx->ptr_map[y][x];
+	image = get_tile_image(img, tile);
+	if (image)
+		mlx_put_image_to_window(mlx->mlx, mlx->mlx_win, image, x * 80, y * 80);
 }
 
 void	render_map(t_mlx *mlx, t_img *img)
 {
-	char *move_count;
-	int x, y;
+	char	*move_count;
+	int		x;
+	int		y;
 
 	if (!mlx || !img || !mlx->ptr_map)
-		return;
+		return ;
+	move_count = ft_itoa(mlx->moves);
 	y = 0;
 	while (y < mlx->lines)
 	{
@@ -67,8 +84,7 @@ void	render_map(t_mlx *mlx, t_img *img)
 		}
 		y++;
 	}
-	move_count = ft_itoa(mlx->moves);
-	draw_rectangle(mlx, 10, 10, 150, 40);
+	draw_rectangle(mlx, 150, 40);
 	mlx_string_put(mlx->mlx, mlx->mlx_win, 20, 30, 0xFFFFFF, "Moves: ");
 	mlx_string_put(mlx->mlx, mlx->mlx_win, 80, 30, 0xFFFFFF, move_count);
 	free(move_count);

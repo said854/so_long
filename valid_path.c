@@ -6,11 +6,11 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:19:26 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/10 09:55:15 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:52:12 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static void	flood_fill(t_mlx *mlx, int x, int y)
 {
@@ -67,6 +67,6 @@ int	valid_path(char **str, t_map *map, int lines)
 	free_map(f.ptr_map, lines);
 	if (map->collected_items == map->total_collectibles && map->door)
 		return (1);
-	perror("Error: Some collectibles or exit are unreachable\n");
+	ft_putstr_fd("Error\n Some collectibles or exit are unreachable\n", 2);
 	return (0);
 }

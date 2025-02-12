@@ -6,28 +6,40 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:21:31 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/10 18:49:47 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 17:47:24 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-static int validate_elements(t_map *map, char **str)
+static int	validate_elements(t_map *map, char **str)
 {
 	if (map->total_collectibles < 1)
-		return (printf("Error: No collectibles (C) in the map\n"), 0);
+		return (ft_putstr_fd("Error\n No collectibles (C)\n", 2), 0);
 	if (map->door != 1)
-		return (printf("Error: There must be exactly 1 exit (E) in the map\n"), 0);
+		return (ft_putstr_fd("Error\n There must be exactly 1 exit (E)\n", 2),
+			0);
 	if (map->player != 1)
-		return (printf("Error: There must be exactly 1 starting position (P) in the map\n"), 0);
+		return (ft_putstr_fd("Error\n There is np player\n", 2),
+			0);
 	if (valid_path(str, map, map->columes) != 1)
-		return (printf("Error: no valid path\n"), 0);
+		return (ft_putstr_fd("Error\n no valid path\n", 2), 0);
 	return (1);
 }
 
-static int check_map_element(t_map *map, char **str)
+static void	update_player_position(t_map *map, int j, int i)
 {
-	int i, j = 0;
+	map->player++;
+	map->x_player = j;
+	map->y_player = i;
+}
+
+static int	check_map_element(t_map *map, char **str)
+{
+	int	i;
+	int	j;
+
+	j = 0;
 	while (str[j])
 	{
 		i = 0;
@@ -38,12 +50,9 @@ static int check_map_element(t_map *map, char **str)
 			else if (str[j][i] == 'E')
 				map->door++;
 			else if (str[j][i] == 'P')
-			{
-				map->player++;
-				map->x_player = j;
-				map->y_player = i;
-			}
-			else if (str[j][i] != '0' && str[j][i] != '1' && str[j][i] != '\n' && str[j][i] != 'N')
+				update_player_position(map, j, i);
+			else if (str[j][i] != '0' && str[j][i] != '1' &&
+						str[j][i] != '\n' && str[j][i] != 'N')
 				return (0);
 			i++;
 		}
@@ -52,11 +61,13 @@ static int check_map_element(t_map *map, char **str)
 	return (1);
 }
 
-int count_coulume(char **str)
+int	count_coulume(char **str)
 {
-	int j = 0;
-	int i = 0;
+	int	j;
+	int	i;
 
+	j = 0;
+	i = 0;
 	while (str[j])
 	{
 		if (str[j][0] == '\n')
@@ -66,7 +77,7 @@ int count_coulume(char **str)
 	return (j - i);
 }
 
-int check_map(t_map *map, char **str)
+int	check_map(t_map *map, char **str)
 {
 	map->total_collectibles = 0;
 	map->collected_items = 0;
@@ -78,6 +89,6 @@ int check_map(t_map *map, char **str)
 	map->rowes = count_coulume(str);
 	if (check_map_element(map, str))
 		return (validate_elements(map, str));
-	printf("Error: Invalid characters in the map\n");
+	ft_putstr_fd("Error\n Invalid characters\n", 2);
 	return (0);
 }

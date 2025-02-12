@@ -6,11 +6,11 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:16:31 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/01/27 10:40:38 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static int	ft_slen(const char *str)
 {
@@ -24,25 +24,26 @@ static int	ft_slen(const char *str)
 	return (len);
 }
 
-int check_rectangular(char **str) 
+int	check_rectangular(char **str)
 {
-    if (!str || !str[0]) 
-        return 0;
+	int	i;
+	int	len;
 
-    int len = ft_slen(str[0]);
-    int i = 1;
-
-    while (str[i]) 
-    {
-        if (str[i][0] == '\n')
-        {
-            break;
-        }
-        if (ft_slen(str[i]) != len)
-        {
-            return 0;
-        }
-        i++;
-    }
-    return 1; 
+	len = ft_slen(str[0]);
+	i = 1;
+	if (!str || !str[0])
+		return (0);
+	while (str[i])
+	{
+		if (str[i][0] == '\n')
+		{
+			break ;
+		}
+		if (ft_slen(str[i]) != len)
+		{
+			return (0);
+		}
+		i++;
+	}
+	return (1);
 }

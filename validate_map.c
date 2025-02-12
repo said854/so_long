@@ -6,13 +6,13 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:35:41 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/10 18:36:11 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-void validate_map_structure(char **map, int num_lines)
+void	validate_map_structure(char **map, int num_lines)
 {
 	if (!check_rectangular(map))
 	{
@@ -26,9 +26,11 @@ void validate_map_structure(char **map, int num_lines)
 	}
 }
 
-void validate_map_content(char **map, int num_lines, t_map *map_data)
+void	validate_map_content(char **map, int num_lines, t_map *map_data)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (map[i])
 	{
 		if (!check_first_walls(map[i]))
@@ -45,7 +47,7 @@ void validate_map_content(char **map, int num_lines, t_map *map_data)
 	}
 }
 
-void validate_map(char **map, int num_lines, t_map *map_data)
+void	validate_map(char **map, int num_lines, t_map *map_data)
 {
 	validate_map_structure(map, num_lines);
 	validate_map_content(map, num_lines, map_data);
