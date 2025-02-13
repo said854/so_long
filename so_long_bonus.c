@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/02 22:24:27 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 17:56:48 by sjoukni          ###   ########.fr       */
+/*   Created: 2025/02/13 16:10:09 by sjoukni           #+#    #+#             */
+/*   Updated: 2025/02/13 16:10:10 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ int	main(int ac, char **av)
 {
 	t_map	map_data;
 	t_mlx	mlx;
-	int i ;
-	
+	int		i;
+
 	i = 0;
 	if (initialize_game(ac, av, &mlx, &map_data))
 		return (1);
@@ -46,12 +46,13 @@ int	main(int ac, char **av)
 	while (i < 10)
 	{
 		if (!(mlx.img.player_frames[i]))
-			return (ft_putstr_fd("Error\n Failed to load textures", 2), close_window(&mlx));
+			return (ft_putstr_fd("Error\nFailed textures", 2),
+				close_window(&mlx), 1);
 		i++;
 	}
 	if (!mlx.img.wall || !mlx.img.template || !mlx.img.collection
 		|| !mlx.img.door || !mlx.img.enemy)
-		return (ft_putstr_fd("Error\n Failed to load textures", 2), close_window(&mlx),
+		return (ft_putstr_fd("Error\nFailed textures", 2), close_window(&mlx),
 			1);
 	mlx_key_hook(mlx.mlx_win, key_hook, &mlx);
 	mlx_hook(mlx.mlx_win, 17, 0, close_window, &mlx);

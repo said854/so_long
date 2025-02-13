@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/02 22:30:34 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 17:48:57 by sjoukni          ###   ########.fr       */
+/*   Created: 2025/02/13 16:09:52 by sjoukni           #+#    #+#             */
+/*   Updated: 2025/02/13 16:09:53 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,9 @@ void	load_images(t_mlx *mlx)
 			&mlx->img.img_width, &mlx->img.img_height);
 	mlx->img.template = mlx_xpm_file_to_image(mlx->mlx, "textures/template.xpm",
 			&mlx->img.img_width, &mlx->img.img_height);
-	mlx->img.collection = mlx_xpm_file_to_image(mlx->mlx, "textures/collection.xpm",
-			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.collection = mlx_xpm_file_to_image(mlx->mlx,
+			"textures/collection.xpm", &mlx->img.img_width,
+			&mlx->img.img_height);
 	mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "textures/door.xpm",
 			&mlx->img.img_width, &mlx->img.img_height);
 	mlx->img.enemy = mlx_xpm_file_to_image(mlx->mlx, "textures/enemy.xpm",

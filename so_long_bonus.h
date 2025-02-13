@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/25 10:09:53 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 18:39:56 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/13 16:13:00 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ typedef struct s_img
 	int		current_frame;
 	int		img_width;
 	int		img_height;
-	int		frame_delay;
 }			t_img;
 
 typedef struct s_mlx
@@ -58,8 +57,8 @@ typedef struct s_mlx
 	char	**ptr_map;
 	int		lines;
 	t_img	img;
-	int		moves;
 	t_map	*map;
+	int		moves;
 }			t_mlx;
 
 /* LIBRARYS */

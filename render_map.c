@@ -6,7 +6,7 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:30:01 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/13 15:55:14 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	render_map(t_mlx *mlx, t_img *img)
 		y++;
 	}
 	draw_rectangle(mlx, 150, 40);
-	mlx_string_put(mlx->mlx, mlx->mlx_win, 20, 30, 0xFFFFFF, "Moves: ");
-	mlx_string_put(mlx->mlx, mlx->mlx_win, 80, 30, 0xFFFFFF, move_count);
+	mlx_string_put(mlx->mlx, mlx->mlx_win, 40, 30, 0xFFFFFF, " MOVES : ");
+	mlx_string_put(mlx->mlx, mlx->mlx_win, 100, 30, 0xFFFFFF, move_count);
 	free(move_count);
 }
