@@ -8,8 +8,8 @@
       "args": [],
       "stopAtEntry": false,
       "externalConsole": false,
-      "cwd": "/home/sjoukni/Desktop/bonus",
-      "program": "/home/sjoukni/Desktop/bonus/build/Debug/outDebug",
+      "cwd": "/home/sjoukni/Desktop/corr",
+      "program": "/home/sjoukni/Desktop/corr/build/Debug/outDebug",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

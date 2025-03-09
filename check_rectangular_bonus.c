@@ -1,41 +1,49 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   check_walls.c                                      :+:      :+:    :+:   */
+/*   check_rectangular.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 10:28:29 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/16 18:46:44 by sjoukni          ###   ########.fr       */
+/*   Created: 2025/01/27 10:16:31 by sjoukni           #+#    #+#             */
+/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-int	check_walls(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (str[i] == '\n')
-			break ;
-		if (str[i] != '1')
-			return (0);
-		i++;
-	}
-	return (1);
-}
-
-int	check_first_walls(char *str)
+static int	ft_slen(const char *str)
 {
 	int	len;
 
-	len = ft_strlen(str);
-	if ((str[0] != '1' || str[len - 2] != '1') && str[0] != '\n')
-	{
+	len = 0;
+	if (!str)
 		return (0);
+	while (str[len] && str[len] != '\n')
+		len++;
+	return (len);
+}
+
+int	check_rectangular(char **str)
+{
+	int	i;
+	int	len;
+
+	len = ft_slen(str[0]);
+	i = 1;
+	if (!str || !str[0])
+		return (0);
+	while (str[i])
+	{
+		if (str[i][0] == '\n')
+		{
+			break ;
+		}
+		if (ft_slen(str[i]) != len)
+		{
+			return (0);
+		}
+		i++;
 	}
 	return (1);
 }

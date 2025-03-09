@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long_bonus.c                                    :+:      :+:    :+:   */
+/*   so_long.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:10:09 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/03/01 15:28:26 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/03/01 15:25:31 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long_bonus.h"
+#include "so_long.h"
 
 int	initialize_game(int ac, char **av, t_mlx *mlx, t_map *map_data)
 {
@@ -45,25 +45,14 @@ int	main(int ac, char **av)
 {
 	t_map	map_data;
 	t_mlx	mlx;
-	int		i;
 
-	i = 0;
 	if (initialize_game(ac, av, &mlx, &map_data))
 		return (1);
-	load_collection_animation(&mlx);
 	load_images(&mlx);
-	while (i < 10)
-	{
-		if (!(mlx.img.collection_frames[i]))
-			return (ft_putstr_fd("Error\nFailed textures", 2),
-				close_window(&mlx), 1);
-		i++;
-	}
-	if (!mlx.img.wall || !mlx.img.template || !mlx.img.door || !mlx.img.enemy
-		|| !mlx.img.player)
+	if (!mlx.img.wall || !mlx.img.template || !mlx.img.collection
+		|| !mlx.img.door || !mlx.img.player)
 		return (ft_putstr_fd("Error\nFailed textures", 2), close_window(&mlx),
 			1);
-	mlx_loop_hook(mlx.mlx, update_animation, &mlx);
 	mlx_key_hook(mlx.mlx_win, key_hook, &mlx);
 	mlx_hook(mlx.mlx_win, 17, 0, close_window, &mlx);
 	mlx_loop(mlx.mlx);

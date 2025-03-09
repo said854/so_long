@@ -6,11 +6,46 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:30:01 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/17 16:07:43 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/16 17:19:33 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
+
+void	draw_rectangle(t_mlx *mlx, int width, int height)
+{
+	int	i;
+	int	j;
+	int	x;
+	int	y;
+
+	if (!mlx || !mlx->mlx_win)
+		return ;
+	i = 0;
+	x = 10;
+	y = 10;
+	while (i < height)
+	{
+		j = 0;
+		while (j < width)
+		{
+			mlx_pixel_put(mlx->mlx, mlx->mlx_win, x + j, y + i, 0x000000);
+			j++;
+		}
+		i++;
+	}
+}
+
+void	display_move_count(t_mlx *mlx)
+{
+	char	*move_count;
+
+	move_count = ft_itoa(mlx->moves);
+	draw_rectangle(mlx, 150, 40);
+	mlx_string_put(mlx->mlx, mlx->mlx_win, 40, 30, 0xFFFFFF, " MOVES : ");
+	mlx_string_put(mlx->mlx, mlx->mlx_win, 100, 30, 0xFFFFFF, move_count);
+	free(move_count);
+}
 
 void	*get_tile_image(t_img *img, char tile)
 {
@@ -18,10 +53,12 @@ void	*get_tile_image(t_img *img, char tile)
 		return (img->template);
 	if (tile == '1' && img->wall)
 		return (img->wall);
-	if (tile == 'C' && img->collection)
-		return (img->collection);
+	if (tile == 'C')
+		return (img->collection_frames[img->current_frame]);
 	if (tile == 'E' && img->door)
 		return (img->door);
+	if (tile == 'N' && img->enemy)
+		return (img->enemy);
 	if (tile == 'P' && img->player)
 		return (img->player);
 	return (NULL);
@@ -40,8 +77,8 @@ void	put_image_to_window(t_mlx *mlx, t_img *img, int x, int y)
 
 void	render_map(t_mlx *mlx, t_img *img)
 {
-	int		x;
-	int		y;
+	int	x;
+	int	y;
 
 	if (!mlx || !img || !mlx->ptr_map)
 		return ;
@@ -56,4 +93,5 @@ void	render_map(t_mlx *mlx, t_img *img)
 		}
 		y++;
 	}
+	display_move_count(mlx);
 }

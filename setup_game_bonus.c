@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   setup_game.c                                       :+:      :+:    :+:   */
+/*   setup_game_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 15:53:33 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/28 21:00:26 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/03/01 15:29:33 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	process_player_movement(t_mlx *mlx, int new_x, int new_y)
 {
@@ -23,15 +23,18 @@ void	process_player_movement(t_mlx *mlx, int new_x, int new_y)
 	mlx->map->x_player = new_x;
 	mlx->map->y_player = new_y;
 	mlx->moves++;
-	ft_putstr_fd("moves : ", 1);
-	ft_putnbr_fd(mlx->moves, 1);
-	ft_putstr_fd("\n", 1);
 }
 
 void	handle_move(t_mlx *mlx, int new_x, int new_y)
 {
 	if (!mlx || !mlx->map || !mlx->ptr_map || mlx->ptr_map[new_y][new_x] == '1')
 		return ;
+	if (mlx->ptr_map[new_y][new_x] == 'N')
+	{
+		printf("You lose!\n");
+		close_window(mlx);
+		return ;
+	}
 	if (mlx->ptr_map[new_y][new_x] == 'E' &&
 		mlx->map->collected_items == mlx->map->total_collectibles)
 	{

@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   valid_path.c                                       :+:      :+:    :+:   */
+/*   valid_path_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:19:26 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/03/01 15:29:22 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/03/01 15:22:37 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static void	flood_fill(t_mlx *mlx, int x, int y)
 {
@@ -18,7 +18,8 @@ static void	flood_fill(t_mlx *mlx, int x, int y)
 
 	map = mlx->map;
 	if (x < 0 || y < 0 || x >= map->rowes || y >= map->columes
-		|| mlx->copy[x][y] == '1' || mlx->copy[x][y] == 'V')
+		|| mlx->copy[x][y] == '1' || mlx->copy[x][y] == 'V'
+		|| mlx->copy[x][y] == 'N')
 		return ;
 	if (mlx->copy[x][y] == 'C')
 		map->collected_items++;

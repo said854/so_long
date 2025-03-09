@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sutup_resources.c                                  :+:      :+:    :+:   */
+/*   sutup_resources_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:09:52 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/28 21:03:46 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/03/01 17:02:59 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	count_lines(int fd)
 {
@@ -74,9 +74,8 @@ void	load_images(t_mlx *mlx)
 			&mlx->img.img_width, &mlx->img.img_height);
 	mlx->img.player = mlx_xpm_file_to_image(mlx->mlx, "textures/player.xpm",
 			&mlx->img.img_width, &mlx->img.img_height);
-	mlx->img.collection = mlx_xpm_file_to_image(mlx->mlx,
-			"textures/collection.xpm", &mlx->img.img_width,
-			&mlx->img.img_height);
 	mlx->img.door = mlx_xpm_file_to_image(mlx->mlx, "textures/door.xpm",
+			&mlx->img.img_width, &mlx->img.img_height);
+	mlx->img.enemy = mlx_xpm_file_to_image(mlx->mlx, "textures/enemy.xpm",
 			&mlx->img.img_width, &mlx->img.img_height);
 }

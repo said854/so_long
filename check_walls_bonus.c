@@ -6,11 +6,11 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/01/27 10:28:29 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/16 18:46:44 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:57 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 int	check_walls(char *str)
 {

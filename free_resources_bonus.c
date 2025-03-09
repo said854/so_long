@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	free_map(char **map, int lines)
 {
@@ -27,16 +27,25 @@ void	free_map(char **map, int lines)
 
 void	free_images(t_mlx *mlx)
 {
+	int	i;
+
+	i = 0;
+	while (i < 10)
+	{
+		if (mlx->img.collection_frames[i])
+			mlx_destroy_image(mlx->mlx, mlx->img.collection_frames[i]);
+		i++;
+	}
 	if (mlx->img.wall)
 		mlx_destroy_image(mlx->mlx, mlx->img.wall);
 	if (mlx->img.template)
 		mlx_destroy_image(mlx->mlx, mlx->img.template);
-	if (mlx->img.collection)
-		mlx_destroy_image(mlx->mlx, mlx->img.collection);
 	if (mlx->img.door)
 		mlx_destroy_image(mlx->mlx, mlx->img.door);
 	if (mlx->img.player)
 		mlx_destroy_image(mlx->mlx, mlx->img.player);
+	if (mlx->img.enemy)
+		mlx_destroy_image(mlx->mlx, mlx->img.enemy);
 }
 
 int	close_window(void *param)

@@ -6,11 +6,11 @@
 /*   By: sjoukni <sjoukni@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 18:35:41 by sjoukni           #+#    #+#             */
-/*   Updated: 2025/02/16 18:53:41 by sjoukni          ###   ########.fr       */
+/*   Updated: 2025/02/12 18:38:23 by sjoukni          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 void	validate_map_structure(char **map, int num_lines)
 {
